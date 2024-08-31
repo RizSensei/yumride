@@ -1,18 +1,19 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as Icon from "react-native-feather";
-import { themeColors } from "../theme";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Categories from "../components/categories";
+import FeaturedRow from "../components/featuredRow";
+import { themeColors } from "../theme";
 
 export default function HomeScreen() {
   return (
-    <SafeAreaView className="bg-white">
+    <SafeAreaView className="pb-10">
       <StatusBar barStyle="dark-content" />
 
       {/* search bar  */}
-      <View className="flex-row items-center space-x-2 px-2 py-2">
+      <View className="bg-white flex-row items-center space-x-2 px-2 py-2">
         <View className="w-full flex-row flex-1 items-center p-3 rounded-full border border-gray-500">
           <Icon.Search height="25" width="25" stroke="gray" />
           <TextInput placeholder="Restaurants" className="ml-2 flex-1" />
@@ -35,8 +36,19 @@ export default function HomeScreen() {
       </View>
 
       {/* main  */}
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{paddingBottom: 20}}>
-        <Categories/>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20}}
+      >
+        {/* categories  */}
+        <Categories />
+
+        {/* featured  */}
+        <View className="mt-5 px-5">
+          {[1,2,3].map((index) => {
+            return <FeaturedRow key={index}/>;
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -1,10 +1,12 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text } from "react-native";
+import { Provider } from "react-redux";
 import Navigation from "./navigation";
+import { store } from "./redux/store";
 
 export default function App() {
   return (
-    <Navigation/>
+    <Provider store={store}>
+      <Navigation/>
+    </Provider>
   );
 }
 

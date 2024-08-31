@@ -4,7 +4,7 @@ import React, { useState } from "react";
 export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(null);
   return (
-    <View className="mt-5">
+    <View className="bg-white py-5">
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
