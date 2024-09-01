@@ -1,22 +1,23 @@
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
 import {
-  View,
-  Text,
+  Image,
+  Platform,
   SafeAreaView,
   StatusBar,
-  Platform,
   StyleSheet,
-  Image,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-import React from "react";
-import { restaurants } from "../assets/data/data";
-import { useNavigation } from "@react-navigation/native";
 // import MapView, { Marker } from "react-native-maps";
 import * as Icon from "react-native-feather";
+import { useSelector } from "react-redux";
+import { selectRestaurant } from "../redux/slices/restaurantSlice";
 import { themeColors } from "../theme";
 
 export default function DeliveryScreen() {
-  const restaurant = restaurants[0];
+  const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>

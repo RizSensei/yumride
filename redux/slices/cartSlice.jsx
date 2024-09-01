@@ -3,25 +3,36 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   items: [],
 };
+console.log(initialState)
 
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      state.items = [...state.items, action.payload];
-    },
-    removeFromCart: (state, action) => {
-      let newCart = [...state.items];
       let itemIndex = state.items.findIndex(
         (item) => item.id === action.payload.id
       );
-      if (itemIndex > 0) {
-        newCart.splice(itemIndex, 1);
+      console.log("itemIndex:",itemIndex);
+      if (itemIndex >= 0) {
+        state.items[itemIndex].quantity += 1;
+      } else {
+        state.items.push({ ...action.payload, quantity: 1 });
+      }
+    },
+    removeFromCart: (state, action) => {
+      let itemIndex = state.items.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      if (itemIndex >= 0) {
+        if (state.items[itemIndex].quantity > 1) {
+          state.items[itemIndex].quantity -= 1;
+        } else {
+          state.items.splice(itemIndex, 1);
+        }
       } else {
         console.log("Can't remove item");
       }
-      state.items = newCart;
     },
     emptyCart: (state) => {
       state.items = [];
@@ -34,8 +45,10 @@ export const { addToCart, removeFromCart, emptyCart } = cartSlice.actions;
 
 export const selectCartItems = (state) => state.cart.items;
 
-export const selectCartItemsById = (state, id) => state.cart.items.filter(item => item.id == id);
+export const selectCartItemsById = (state, id) =>
+  state.cart.items.filter((item) => item.id === id);
 
-export const selectCartTotal = (state) => state.cart.items.reduce((total,item) => total == total + item.price, 0);
+export const selectCartTotal = (state) =>
+  state.cart.items.reduce((total, item) => total == total + (item.price * item.quantity), 0);
 
 export default cartSlice.reducer;

@@ -1,5 +1,5 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   SafeAreaView,
@@ -13,11 +13,20 @@ import { themeColors } from "../theme";
 import DishRow from "../components/dishrow";
 import CartIcon from "../components/cartIcon";
 import { StatusBar } from "expo-status-bar";
+import { useDispatch } from "react-redux";
+import { setRestaurant } from "../redux/slices/restaurantSlice";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
   let item = params;
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(item && item.id){
+      dispatch(setRestaurant({...item}))
+    }
+  })
 
   return (
     <View>
@@ -37,7 +46,7 @@ export default function RestaurantScreen() {
           </TouchableOpacity>
           <View className="bg-white -mt-12 pt-6 rounded-t-3xl">
             <View className="px-5">
-              <Text className="text-3xl font-bold"> {item.name} </Text>
+              <Text className="text-3xl font-bold"> {item?.name} </Text>
               <View className="flex-row space-x-2 my-1">
                 <View className="flex-row items-center space-x-1">
                   <Icon.Star
@@ -47,11 +56,11 @@ export default function RestaurantScreen() {
                     strokeWidth={2.5}
                   />
                   <Text className="text-sm">
-                    <Text className="text-green-700"> {item.rating} </Text>
+                    <Text className="text-green-700"> {item?.rating} </Text>
                     <Text className="text-gray-700">
                       &#40; 4.4K reviews&#41; .
                       <Text className="font-semibold text-gray-700">
-                        {item.cuisine}
+                        {item?.cuisine}
                       </Text>
                     </Text>
                   </Text>
@@ -60,11 +69,11 @@ export default function RestaurantScreen() {
                   <Icon.MapPin color="gray" width={15} height={15} />
                   <Text className="text-gray-700 text-sm">
                     {" "}
-                    Nearby&nbsp;.&nbsp;{item.address.street}{" "}
+                    Nearby&nbsp;.&nbsp;{item?.address?.street}{" "}
                   </Text>
                 </View>
               </View>
-              <Text className="text-gray-500 mt-2"> {item.description} </Text>
+              <Text className="text-gray-500 mt-2"> {item?.description} </Text>
             </View>
           </View>
         </View>
@@ -72,7 +81,7 @@ export default function RestaurantScreen() {
           <Text className="p-4 text-2xl font-bold">Menu</Text>
           {/* dishes  */}
           {
-            item.menu.map((dish, index) => <DishRow key={index} item={{...dish}}/>)
+            item?.menu?.map((dish, index) => <DishRow key={index} item={{...dish}}/>)
           }
         </View>
       </ScrollView>

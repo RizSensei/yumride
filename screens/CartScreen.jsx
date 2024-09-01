@@ -10,13 +10,15 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import { restaurants } from "../assets/data/data";
+// import { restaurants } from "../assets/data/data";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+import { selectRestaurant } from "../redux/slices/restaurantSlice";
 
 const CartScreen = () => {
-  const restaurant = restaurants[0];
+  const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
 
   return (

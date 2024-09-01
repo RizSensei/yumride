@@ -1,13 +1,21 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { ScrollView, Text, TextInput, View } from "react-native";
+import {
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import * as Icon from "react-native-feather";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Categories from "../components/categories";
 import FeaturedRow from "../components/featuredRow";
 import { themeColors } from "../theme";
+import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
   return (
     <SafeAreaView className="pb-10">
       <StatusBar barStyle="dark-content" />
@@ -38,15 +46,15 @@ export default function HomeScreen() {
       {/* main  */}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20}}
+        contentContainerStyle={{ paddingBottom: 20 }}
       >
         {/* categories  */}
         <Categories />
 
         {/* featured  */}
         <View className="mt-5 px-5">
-          {[1,2,3].map((index) => {
-            return <FeaturedRow key={index}/>;
+          {[1, 2, 3].map((index) => {
+            return <FeaturedRow key={index} />;
           })}
         </View>
       </ScrollView>

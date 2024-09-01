@@ -6,7 +6,11 @@ module.exports = {
     "./components/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        protestGuerrilla: ['"Protest Guerrilla"'], // Wrapped in quotes
+      },
+    },
   },
   plugins: [],
 };
