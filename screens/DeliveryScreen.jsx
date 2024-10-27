@@ -17,7 +17,7 @@ import { selectRestaurant } from "../redux/slices/restaurantSlice";
 import { themeColors } from "../theme";
 
 export default function DeliveryScreen() {
-  const restaurant = useSelector(selectRestaurant);
+  // const restaurant = useSelector(selectRestaurant);
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>

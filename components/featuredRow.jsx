@@ -2,16 +2,16 @@ import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React from "react";
 import { themeColors } from "../theme";
 import RestaurantCard from "./restaurantCard";
-import { restaurants } from "../assets/data/data";
+import { dishes } from "../data/dishes-data";
 
 export default function FeaturedRow() {
   return (
     <View>
       <View className="flex-row justify-between items-center">
         <View>
-          <Text className="text-lg font-bold">Hot and Spicy</Text>
+          <Text className="text-lg font-bold">Top Dishes Choice</Text>
           <Text className="text-sm text-gray-500">
-            soft and render fried chicken
+            mouth watering taste
           </Text>
         </View>
         <TouchableOpacity>
@@ -29,8 +29,8 @@ export default function FeaturedRow() {
         showsHorizontalScrollIndicator={false}
         className="overflow-visible py-5"
       >
-        {restaurants?.map((restaurant, index) => (
-          <RestaurantCard key={index} restaurant={restaurant} />
+        {dishes?.map((dish, index) => (
+          <RestaurantCard key={index} dish={dish} />
         ))}
       </ScrollView>
     </View>

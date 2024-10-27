@@ -12,6 +12,7 @@ import RestaurantScreen from "./screens/RestaurantScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 
 import * as Icon from "react-native-feather";
+import Toast from "react-native-toast-message";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,9 +25,7 @@ function TabNavigator() {
         component={HomeScreen}
         options={{
           tabBarLabel: "Home",
-          tabBarIcon: () => (
-            <Icon.Home height="25" width="25" stroke="gray" />
-          ),
+          tabBarIcon: () => <Icon.Home height="25" width="25" stroke="gray" />,
         }}
       />
       <Tab.Screen
@@ -53,19 +52,22 @@ function TabNavigator() {
 
 export default function Navigation() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="MainTabs" component={TabNavigator} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="Restaurant" component={RestaurantScreen} />
-        <Stack.Screen name="Delivery" component={DeliveryScreen} />
-        <Stack.Screen
-          name="OrderPreparing"
-          options={{ presentation: "fullScreenModal" }}
-          component={OrderPreparingSCreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <Toast />
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="MainTabs" component={TabNavigator} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Restaurant" component={RestaurantScreen} />
+          <Stack.Screen name="Delivery" component={DeliveryScreen} />
+          <Stack.Screen
+            name="OrderPreparing"
+            options={{ presentation: "fullScreenModal" }}
+            component={OrderPreparingSCreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }

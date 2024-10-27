@@ -4,11 +4,11 @@ import React from "react";
 import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
 
-export default function RestaurantCard({ restaurant }) {
+export default function RestaurantCard({ dish }) {
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate("Restaurant", { ...restaurant })}
+      onPress={() => navigation.navigate("Restaurant", { ...dish })}
     >
       <View
         className="mr-6 bg-white rounded-3xl shadow-xl shadow-gray-200 overflow-hidden"
@@ -17,12 +17,14 @@ export default function RestaurantCard({ restaurant }) {
           shadowRadius: 7,
         }}
       >
-        <Image
-          className="h-36 w-64"
-          source={require("../assets/images/demo-image-restaurant.jpg")}
-        />
+        <View className="h-36 w-64">
+          <Image
+            className="h-full w-full object-scale-down"
+            source={{uri:dish.image}}
+          />
+        </View>
         <View className="px-3 pb-4 space-y-2">
-          <Text className="text-xl font-bold pt-2">{restaurant.name}</Text>
+          <Text className="text-xl font-bold pt-2">{dish.name}</Text>
           <View className="flex-row items-center space-x-1">
             <Icon.Star
               height="12"
@@ -31,18 +33,11 @@ export default function RestaurantCard({ restaurant }) {
               strokeWidth={2.5}
             />
             <Text className="text-xs">
-              <Text className="text-green-700"> {restaurant.rating} </Text>
+              <Text className="text-green-700"> {dish.rating ?? "4.75"} </Text>
               <Text className="text-gray-700">
                 &#40; 4.4K reviews&#41; .
-                <Text className="font-semibold">{restaurant.cuisine}</Text>
+                <Text className="font-semibold">{dish.category}</Text>
               </Text>
-            </Text>
-          </View>
-          <View className="flex-row items-center space-x-1">
-            <Icon.MapPin color="gray" width={15} height={15} />
-            <Text className="text-gray-700 text-sm">
-              {" "}
-              Nearby&nbsp;.&nbsp;{restaurant.address.street}{" "}
             </Text>
           </View>
         </View>

@@ -1,25 +1,33 @@
 import React from "react";
 import {
+  Image,
+  Platform,
   SafeAreaView,
+  ScrollView,
   StatusBar,
+  StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Platform,
-  StyleSheet,
-  Image,
-  ScrollView,
 } from "react-native";
-// import { restaurants } from "../assets/data/data";
-import * as Icon from "react-native-feather";
-import { themeColors } from "../theme";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
-import { selectRestaurant } from "../redux/slices/restaurantSlice";
+import * as Icon from "react-native-feather";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  selectCartItems,
+  selectCartTotal,
+} from "../redux/slices/cartSlice";
+import { themeColors } from "../theme";
 
 const CartScreen = () => {
-  const restaurant = useSelector(selectRestaurant);
+  const cartItems = useSelector(selectCartItems);
+  const cartTotal = useSelector(selectCartTotal);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  let delivery_charge = 5;
 
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
@@ -32,7 +40,7 @@ const CartScreen = () => {
         </TouchableOpacity>
         <View>
           <Text className="text-center font-bold text-xl">Your Cart</Text>
-          <Text className="text-center text-gray-500">{restaurant.name}</Text>
+          {/* <Text className="text-center text-gray-500">{restaurant?.name}</Text> */}
         </View>
       </View>
 
@@ -62,24 +70,25 @@ const CartScreen = () => {
         contentContainerStyle={{ paddingBottom: 50 }}
         className="bg-white pt-5"
       >
-        {restaurant.menu.map((item, index) => {
+        {cartItems.map((item, index) => {
           return (
             <View
               key={index}
               className="flex-row items-center space-x-3 py-2 px-4 bg-white rounded-3xl mt-2"
             >
               <Text className="font-bold" style={{ color: themeColors.text }}>
-                2x
+                {item.quantity}x
               </Text>
               <Image
                 className="h-14 w-14 rounded-full"
-                source={require(`../assets/images/dish/dish-1.jpg`)}
+                source={{ uri: item.image }}
               />
               <Text className="flex-1 font-bold text-gray-700">
                 {item.name}
               </Text>
               <View className="flex-row items-center">
                 <TouchableOpacity
+                  onPress={() => dispatch(removeFromCart({ ...item }))}
                   className="p-1 rounded-full"
                   style={{ backgroundColor: themeColors.bgColor(1) }}
                 >
@@ -90,8 +99,9 @@ const CartScreen = () => {
                     stroke={"white"}
                   />
                 </TouchableOpacity>
-                <Text className="px-3">$120</Text>
+                <Text className="px-3">${item.price * item.quantity}</Text>
                 <TouchableOpacity
+                  onPress={() => dispatch(addToCart({ ...item }))}
                   className="p-1 rounded-full"
                   style={{ backgroundColor: themeColors.bgColor(1) }}
                 >
@@ -114,20 +124,22 @@ const CartScreen = () => {
       >
         <View className="flex-row justify-between">
           <Text className="text-gray-700"> Subtotal </Text>
-          <Text className="text-gray-700"> $20 </Text>
+          <Text className="text-gray-700"> ${cartTotal} </Text>
         </View>
         <View className="flex-row justify-between">
           <Text className="text-gray-700"> Delivery Fee </Text>
-          <Text className="text-gray-700"> $20 </Text>
+          <Text className="text-gray-700"> ${delivery_charge} </Text>
         </View>
         <View className="flex-row justify-between">
           <Text className="text-gray-700 font-extrabold"> Order Total </Text>
-          <Text className="text-gray-700 font-extrabold"> $20 </Text>
+          <Text className="text-gray-700 font-extrabold"> ${cartTotal + delivery_charge} </Text>
         </View>
         <View>
-          <TouchableOpacity 
-          onPress={() =>navigation.navigate('OrderPreparing') }
-          style={{backgroundColor:themeColors.bgColor(1)}} className= "p-3 rounded-full">
+          <TouchableOpacity
+            onPress={() => navigation.navigate("OrderPreparing")}
+            style={{ backgroundColor: themeColors.bgColor(1) }}
+            className="p-3 rounded-full"
+          >
             <Text className="text-white text-center font-bold text-lg">
               Place Order
             </Text>

@@ -1,12 +1,17 @@
 import { Provider } from "react-redux";
 import Navigation from "./navigation";
 import { store } from "./redux/store";
+import AuthProvider from "./context/AuthContext";
+import { registerRootComponent } from 'expo';
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <Navigation/>
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    </AuthProvider>
   );
 }
 
+registerRootComponent(App);

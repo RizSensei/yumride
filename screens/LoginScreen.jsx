@@ -2,20 +2,46 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
-    Image,
-    SafeAreaView,
-    Text,
-    TouchableOpacity,
-    View,
+  Image,
+  SafeAreaView,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import AppTextInput from "../components/appTextInput";
 import { themeColors } from "../theme";
+import { useAuth } from "../context/AuthContext";
+import "../firebaseConfig";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Login = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [focused, setFocused] = useState(false);
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const authentication = getAuth();
+  
+  const { setLoggedInUser } = useAuth();
+
+  const handleSignIn = async () => {
+    // setIsLoading(true);
+
+    signInWithEmailAndPassword(authentication, email, password)
+      .then((res) => {
+        console.log("successful");
+        setLoggedInUser(res.user);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError("Incorrect Email/Password");
+      });
+
+    // .finally(() => setIsLoading(false));
+  };
 
   return (
     <SafeAreaView>
@@ -57,8 +83,16 @@ const Login = () => {
           </Text>
         </View>
         <View style={{ marginVertical: 20 }}>
-          <AppTextInput placeholder="Email" />
-          <AppTextInput placeholder="Password" />
+          <AppTextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <AppTextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+          />
         </View>
 
         <View>
@@ -73,6 +107,7 @@ const Login = () => {
           </Text>
         </View>
         <TouchableOpacity
+        onPress={() => handleSignIn()}
           style={{
             padding: 20,
             marginVertical: 20,
@@ -113,70 +148,24 @@ const Login = () => {
             Create new account
           </Text>
         </TouchableOpacity>
-        {/* 
-        <View style={{ marginVertical: 30 }}>
-          <Text
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Home");
+          }}
+          style={{
+            marginTop: 10
+          }}
+        >
+        <Text
             style={{
               color: themeColors.text,
               textAlign: "center",
               fontSize: 14,
             }}
           >
-            or continue with
+            Back - Home
           </Text>
-
-          <View
-            style={{
-              marginTop: 10,
-              flexDirection: "row",
-              justifyContent: "center",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                backgroundColor: "#ddd",
-                borderRadius: 5,
-                marginHorizontal: 10,
-              }}
-            >
-              <Ionicons name="logo-google" color="#000" size={20} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                backgroundColor: "#ddd",
-                borderRadius: 5,
-                marginHorizontal: 10,
-              }}
-            >
-              <Ionicons name="logo-apple" color="#000" size={20} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                backgroundColor: "#ddd",
-                borderRadius: 5,
-                marginHorizontal: 10,
-              }}
-            >
-              <Ionicons name="logo-twitter" color="#000" size={20} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={{
-                padding: 10,
-                backgroundColor: "#ddd",
-                borderRadius: 5,
-                marginHorizontal: 10,
-              }}
-            >
-              <Ionicons name="logo-facebook" color="#000" size={20} />
-            </TouchableOpacity>
-          </View>
-        </View> */}
+          </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

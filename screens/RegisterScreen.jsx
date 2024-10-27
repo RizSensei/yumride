@@ -10,12 +10,37 @@ import {
 } from "react-native";
 import AppTextInput from "../components/appTextInput";
 import { themeColors } from "../theme";
+import "../firebaseConfig";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import Toast from "react-native-toast-message";
+
+const authentication = getAuth();
 
 const Register = () => {
   const [focused, setFocused] = useState(false);
   const navigation = useNavigation();
 
   const [hidePass, setHidePass] = useState(true);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignUp = () => {
+    // setIsLoading(true);
+    createUserWithEmailAndPassword(authentication, email, password)
+      .then((res) => {
+        console.log(res.user.email);
+        Toast.show({
+          type: 'success',
+          text1: 'Registration Successful',
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      // .finally(() => setIsLoading(false));
+  };
 
   return (
     <SafeAreaView>
@@ -47,18 +72,20 @@ const Register = () => {
           </Text>
         </View>
         <View style={{ marginVertical: 20 }}>
-          <AppTextInput placeholder="Name" />
-          <AppTextInput placeholder="Email" />
+          <AppTextInput placeholder="Email" value={email} onChangeText={setEmail}/>
           <AppTextInput
             placeholder="Password"
             secureTextEntry={hidePass ? true : false}
+            value={password} onChangeText={setPassword}
           />
           <AppTextInput
             placeholder="Confirm Password"
             secureTextEntry={hidePass ? true : false}
+            value={confirmPassword} onChangeText={setConfirmPassword}
           />
         </View>
         <TouchableOpacity
+          onPress={() => handleSignUp()}
           style={{
             padding: 20,
             marginVertical: 10,
@@ -99,6 +126,24 @@ const Register = () => {
             Already have an account
           </Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Home");
+          }}
+          style={{
+            marginTop: 10
+          }}
+        >
+        <Text
+            style={{
+              color: themeColors.text,
+              textAlign: "center",
+              fontSize: 14,
+            }}
+          >
+            Back - Home
+          </Text>
+          </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
