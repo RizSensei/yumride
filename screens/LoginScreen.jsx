@@ -13,6 +13,7 @@ import { themeColors } from "../theme";
 import { useAuth } from "../context/AuthContext";
 import "../firebaseConfig";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { showToastForIncorrectCredentials } from "../components/toast";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Login = () => {
@@ -36,8 +37,7 @@ const Login = () => {
         setLoggedInUser(res.user);
       })
       .catch((err) => {
-        console.log(err);
-        setError("Incorrect Email/Password");
+        showToastForIncorrectCredentials();
       });
 
     // .finally(() => setIsLoading(false));
@@ -57,29 +57,19 @@ const Login = () => {
       >
         <View style={{ alignItems: "center" }}>
           <Image
-            style={{ height: 100 }}
+            style={{ height: 250 }}
             resizeMode="contain"
-            source={require("../assets/images/Hamburger.gif")}
+            source={require("../assets/images/YumBites.png")}
           />
           <Text
             style={{
-              fontSize: 30,
+              fontSize: 28,
               color: themeColors.text,
-              marginVertical: 30,
+              marginVertical: 0,
               fontWeight: "bold",
             }}
           >
-            Login Here
-          </Text>
-          <Text
-            style={{
-              fontSize: 24,
-              maxWidth: "60%",
-              textAlign: "center",
-              fontWeight: "600",
-            }}
-          >
-            YumRide
+            Login
           </Text>
         </View>
         <View style={{ marginVertical: 20 }}>

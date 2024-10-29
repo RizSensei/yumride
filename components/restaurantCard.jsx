@@ -20,7 +20,7 @@ export default function RestaurantCard({ dish }) {
         <View className="h-36 w-64">
           <Image
             className="h-full w-full object-scale-down"
-            source={{uri:dish.image}}
+            source={{ uri: dish.image }}
           />
         </View>
         <View className="px-3 pb-4 space-y-2">

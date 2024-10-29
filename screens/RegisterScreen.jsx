@@ -31,6 +31,9 @@ const Register = () => {
     createUserWithEmailAndPassword(authentication, email, password)
       .then((res) => {
         console.log(res.user.email);
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
         Toast.show({
           type: 'success',
           text1: 'Registration Successful',
@@ -39,7 +42,6 @@ const Register = () => {
       .catch((error) => {
         console.log(error);
       })
-      // .finally(() => setIsLoading(false));
   };
 
   return (
@@ -54,21 +56,21 @@ const Register = () => {
           flexGrow: 1,
         }}
       >
-        <View style={{ alignItems: "center" }}>
+            <View style={{ alignItems: "center" }}>
           <Image
-            style={{ height: 100 }}
+            style={{ height: 250 }}
             resizeMode="contain"
-            source={require("../assets/images/Hamburger.gif")}
+            source={require("../assets/images/YumBites.png")}
           />
           <Text
             style={{
-              fontSize: 20,
+              fontSize: 28,
               color: themeColors.text,
-              marginVertical: 5,
+              marginVertical: 0,
               fontWeight: "bold",
             }}
           >
-            Create Account
+            Register
           </Text>
         </View>
         <View style={{ marginVertical: 20 }}>

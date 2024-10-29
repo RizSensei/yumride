@@ -7,25 +7,45 @@ import DeliveryScreen from "./screens/DeliveryScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import OrderPreparingSCreen from "./screens/OrderPreparingScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import RestaurantScreen from "./screens/RestaurantScreen";
-import ProfileScreen from "./screens/ProfileScreen";
 
+import { Text, View } from "react-native";
 import * as Icon from "react-native-feather";
-import Toast from "react-native-toast-message";
+import { useCart } from "./hooks/useCart";
+import CartSummaryScreen from "./screens/CartSummaryScreen";
+import StartScreen from "./screens/StartScreen";
+import AllDishesScreen from "./screens/AllDishesScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
+  const { cartItemsLength } = useCart();
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name="Start"
+        component={StartScreen}
+        // options={{
+        //   tabBarStyle: { display:'none' }, 
+        // }}
+      />
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
           tabBarLabel: "Home",
-          tabBarIcon: () => <Icon.Home height="25" width="25" stroke="gray" />,
+          tabBarActiveTintColor: "green",
+          tabBarInactiveTintColor: "gray",
+          tabBarIcon: ({ focused }) => (
+            <Icon.Home
+              height="25"
+              width="25"
+              stroke={focused ? "green" : "gray"}
+            />
+          ),
         }}
       />
       <Tab.Screen
@@ -33,8 +53,33 @@ function TabNavigator() {
         component={CartScreen}
         options={{
           tabBarLabel: "Cart",
-          tabBarIcon: () => (
-            <Icon.ShoppingCart height="25" width="25" stroke="gray" />
+          tabBarActiveTintColor: "green",
+          tabBarInactiveTintColor: "gray",
+          tabBarIcon: ({ focused }) => (
+            <View style={{ position: "relative" }}>
+              <Icon.ShoppingCart
+                height="25"
+                width="25"
+                stroke={focused ? "green" : "gray"}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  top: -5,
+                  right: -5,
+                  backgroundColor: "green",
+                  borderRadius: 10,
+                  width: 16,
+                  height: 16,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "white", fontSize: 10 }}>
+                  {cartItemsLength}
+                </Text>
+              </View>
+            </View>
           ),
         }}
       />
@@ -43,7 +88,15 @@ function TabNavigator() {
         component={ProfileScreen}
         options={{
           tabBarLabel: "Profile",
-          tabBarIcon: () => <Icon.User height="25" width="25" stroke="gray" />,
+          tabBarActiveTintColor: "green",
+          tabBarInactiveTintColor: "gray",
+          tabBarIcon: ({ focused }) => (
+            <Icon.User
+              height="25"
+              width="25"
+              stroke={focused ? "green" : "gray"}
+            />
+          ),
         }}
       />
     </Tab.Navigator>
@@ -53,14 +106,16 @@ function TabNavigator() {
 export default function Navigation() {
   return (
     <>
-      <Toast />
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="MainTabs" component={TabNavigator} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Restaurant" component={RestaurantScreen} />
+          <Stack.Screen name="AllDishes" component={AllDishesScreen} />
           <Stack.Screen name="Delivery" component={DeliveryScreen} />
+          <Stack.Screen name="CartSummary" component={CartSummaryScreen} />
+          <Stack.Screen name="Start" component={StartScreen} />
           <Stack.Screen
             name="OrderPreparing"
             options={{ presentation: "fullScreenModal" }}

@@ -33,28 +33,6 @@ export const dishes = [
     category: "Vegeterian",
   },
   {
-    _id: 4,
-
-    name: "Grilled Veggie Skewers",
-    description:
-      "Colorful and nutritious skewers with a variety of grilled vegetables, perfect for a light and healthy meal.",
-    image:
-      "https://cdn.sanity.io/images/uwrmmtdn/production/157a219b3bc811f63dd2815628efe09e9fe17626-236x354.jpg?w=2000&fit=max&auto=format",
-    price: 25.25,
-    category: "Vegeterian",
-  },
-  {
-    _id: 5,
-
-    name: "Calm Delight Salad",
-    description:
-      "A refreshing mix of greens, fruits, and nuts with a light vinaigrette",
-    image:
-      "https://cdn.sanity.io/images/uwrmmtdn/production/c666586b8cff3dffc0b203dfdc75f027f4d19b07-564x821.jpg?w=2000&fit=max&auto=format",
-    price: 12.99,
-    category: "Salad",
-  },
-  {
     _id: 6,
 
     name: "Margherita Pizza",

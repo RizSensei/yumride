@@ -4,9 +4,9 @@ import React from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import * as Icon from "react-native-feather";
 import { useDispatch } from "react-redux";
+import CartIcon from "../components/cartIcon";
 import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
 import { themeColors } from "../theme";
-import CartIcon from "../components/cartIcon";
 
 export default function RestaurantScreen() {
   const { params } = useRoute();
@@ -14,7 +14,7 @@ export default function RestaurantScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const handleIncrease = () => {
+  const handleAddToCart = () => {
     dispatch(addToCart({ ...item }));
   };
 
@@ -64,34 +64,44 @@ export default function RestaurantScreen() {
                 </Text>
                 <View className="flex-row items-center">
                   <TouchableOpacity
-                    onPress={handleDecrease}
-                    // disabled={!totalItems.length}
+                    onPress={handleAddToCart}
                     className="p-1 rounded-full"
                     style={{ backgroundColor: themeColors.bgColor(1) }}
                   >
-                    <Icon.Minus
-                      strokeWidth={2}
-                      height={20}
-                      width={20}
-                      stroke={"white"}
-                    />
-                  </TouchableOpacity>
-                  <Text className="px-3">1</Text>
-                  <TouchableOpacity
-                    onPress={handleIncrease}
-                    className="p-1 rounded-full"
-                    style={{ backgroundColor: themeColors.bgColor(1) }}
-                  >
-                    <Icon.Plus
-                      strokeWidth={2}
-                      height={20}
-                      width={20}
-                      stroke={"white"}
-                    />
+                    <Text
+                      style={{
+                        color: "white",
+                        paddingVertical: 2,
+                        paddingHorizontal: 5,
+                      }}
+                    >
+                      Add to Cart
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
               <Text className="text-gray-500 mt-2"> {item?.description} </Text>
+
+              <View
+                style={{
+                  marginTop: 10,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                }}
+              >
+                <View
+                  style={{
+                    paddingVertical: 10,
+                    paddingHorizontal: 10,
+                    backgroundColor: themeColors.bgColor(0.5),
+                  }}
+                >
+                  <Text style={{ color: "white" }}>
+                    You have already added the dish in the cart.
+                  </Text>
+                </View>
+              </View>
             </View>
           </View>
         </View>

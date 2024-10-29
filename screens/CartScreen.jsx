@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   Image,
@@ -10,31 +11,32 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import * as Icon from "react-native-feather";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useCart } from "../hooks/useCart";
 import {
   addToCart,
+  removeDish,
   removeFromCart,
-  selectCartItems,
-  selectCartTotal,
 } from "../redux/slices/cartSlice";
 import { themeColors } from "../theme";
+import { showToastForEmptyCart } from "../components/toast";
 
 const CartScreen = () => {
-  const cartItems = useSelector(selectCartItems);
-  const cartTotal = useSelector(selectCartTotal);
+  const { cartItems, cartTotal } = useCart();
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  let delivery_charge = 5;
+  let delivery_charge = (0.05 * cartTotal).toFixed(2);
+  let total_charge_after_delivery =
+    parseFloat(delivery_charge) + parseFloat(cartTotal);
 
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
       <View className="relative py-4 shadow-sm">
         <TouchableOpacity
           onPress={() => navigation.goBack()}
-          className="absolute top-4 left-4 bg-gray-50 p-2 rounded-full shadow z-[100]"
+          className="absolute top-2 left-4 bg-gray-50 p-2 rounded-full shadow z-[100]"
         >
           <Icon.ArrowLeft strokeWidth={3} stroke={themeColors.bgColor(1)} />
         </TouchableOpacity>
@@ -67,7 +69,7 @@ const CartScreen = () => {
 
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 50 }}
+        contentContainerStyle={{ paddingBottom: 0 }}
         className="bg-white pt-5"
       >
         {cartItems.map((item, index) => {
@@ -113,6 +115,18 @@ const CartScreen = () => {
                   />
                 </TouchableOpacity>
               </View>
+              <TouchableOpacity
+                onPress={() => dispatch(removeDish(index))}
+                className="p-1 rounded-full"
+                style={{ backgroundColor: "red" }}
+              >
+                <Icon.X
+                  strokeWidth={2}
+                  height={20}
+                  width={20}
+                  stroke={"white"}
+                />
+              </TouchableOpacity>
             </View>
           );
         })}
@@ -132,11 +146,16 @@ const CartScreen = () => {
         </View>
         <View className="flex-row justify-between">
           <Text className="text-gray-700 font-extrabold"> Order Total </Text>
-          <Text className="text-gray-700 font-extrabold"> ${cartTotal + delivery_charge} </Text>
+          <Text className="text-gray-700 font-extrabold">
+            {" "}
+            ${total_charge_after_delivery}{" "}
+          </Text>
         </View>
         <View>
           <TouchableOpacity
-            onPress={() => navigation.navigate("OrderPreparing")}
+            onPress={ cartItems.length === 0 ? showToastForEmptyCart :  () => navigation.navigate("CartSummary") }
+            // onPress={() => navigation.navigate("OrderPreparing")}
+            // onPress={() => navigation.navigate("CartSummary")}
             style={{ backgroundColor: themeColors.bgColor(1) }}
             className="p-3 rounded-full"
           >

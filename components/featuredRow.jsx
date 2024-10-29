@@ -3,18 +3,19 @@ import React from "react";
 import { themeColors } from "../theme";
 import RestaurantCard from "./restaurantCard";
 import { dishes } from "../data/dishes-data";
+import { useNavigation } from "@react-navigation/native";
 
 export default function FeaturedRow() {
+  const navigation = useNavigation();
+
   return (
     <View>
       <View className="flex-row justify-between items-center">
         <View>
           <Text className="text-lg font-bold">Top Dishes Choice</Text>
-          <Text className="text-sm text-gray-500">
-            mouth watering taste
-          </Text>
+          <Text className="text-sm text-gray-500">mouth watering taste</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("AllDishes")}>
           <Text
             style={{ color: themeColors.text }}
             className="font-semibold w-max"
