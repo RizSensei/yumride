@@ -1,16 +1,6 @@
 import React from "react";
-import {
-  Image,
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { themeColors } from "../theme";
-import { useNavigation } from "@react-navigation/native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { themeColors } from "../../theme";
 
 const Circle = () => {
   return (
@@ -18,9 +8,9 @@ const Circle = () => {
       style={{
         position: "absolute",
         bottom: 5,
-        left:'50%',
+        left: "50%",
         transform: [{ translateX: -100 }],
-        zIndex:-10,
+        zIndex: -10,
         height: 350,
         width: 350,
         borderRadius: 9999,
@@ -45,34 +35,30 @@ const Circle = () => {
   );
 };
 
-const StartScreen = () => {
-  const navigation = useNavigation();
-
+const StarterComp = ({ handlePressExplore }) => {
   return (
-    <SafeAreaView style={styles.AndroidSafeArea}>
+    <>
       <View
         style={{
           height: "100%",
-          display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           paddingVertical: 52,
         }}
       >
-        <View style={{position:'relative'}}>
+        <View style={{ position: "relative" }}>
           <Image
-            source={require("../assets/images/starter-girl-image.png")}
+            source={require("../../assets/images/starter-girl-image.png")}
             className="w-64 h-64 "
           />
-            <Circle />
-
+          <Circle />
         </View>
 
         <View style={{ width: "100%", paddingHorizontal: 24 }}>
           <View
             style={{
-                height:150,
+              height: 150,
               borderRadius: 50,
               paddingHorizontal: 10,
               paddingVertical: 5,
@@ -84,7 +70,7 @@ const StartScreen = () => {
           >
             <View>
               <Image
-                source={require("../assets/images/YumBites-cropped.png")}
+                source={require("../../assets/images/YumBites-cropped.png")}
                 className="h-24 aspect-video"
               />
             </View>
@@ -115,8 +101,8 @@ const StartScreen = () => {
 
           <TouchableOpacity
             onPress={() => {
-                navigation.navigate("Home");
-              }}
+              handlePressExplore();
+            }}
             style={{
               padding: 20,
               marginVertical: 10,
@@ -136,19 +122,9 @@ const StartScreen = () => {
             </Text>
           </TouchableOpacity>
         </View>
-
-        {/* <Circle /> */}
       </View>
-    </SafeAreaView>
+    </>
   );
 };
 
-export default StartScreen;
-
-const styles = StyleSheet.create({
-  AndroidSafeArea: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-});
+export default StarterComp;

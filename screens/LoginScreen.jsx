@@ -18,29 +18,24 @@ import { showToastForIncorrectCredentials } from "../components/toast";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Login = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [focused, setFocused] = useState(false);
   const navigation = useNavigation();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("meroaccount@gmail.com");
+  const [password, setPassword] = useState("12345678");
 
   const authentication = getAuth();
   
-  const { setLoggedInUser } = useAuth();
+  const { setIsAuthenticated } = useAuth();
 
   const handleSignIn = async () => {
-    // setIsLoading(true);
-
     signInWithEmailAndPassword(authentication, email, password)
       .then((res) => {
-        console.log("successful");
-        setLoggedInUser(res.user);
+        setIsAuthenticated(true);
+        navigation.navigate("Home")
       })
       .catch((err) => {
         showToastForIncorrectCredentials();
       });
-
-    // .finally(() => setIsLoading(false));
   };
 
   return (

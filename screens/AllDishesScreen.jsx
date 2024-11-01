@@ -66,9 +66,33 @@ const AllDishesScreen = () => {
                   />
                 </View>
 
-                <View style={{marginLeft: 10, flexDirection:'column'}}>
+                <View style={{ marginLeft: 10, flexDirection: "column" }}>
                   <Text className="text-xl font-bold">{dish.name}</Text>
-                  <Text  numberOfLines={1} className="text-xs font-medium mt-1" style={{color:'gray'}}>{dish.description}</Text>
+                  <Text
+                    numberOfLines={1}
+                    className="text-xs font-medium mt-1"
+                    style={{ color: "gray" }}
+                  >
+                    {dish.description}
+                  </Text>
+                  <View style={{marginTop:4}} className="flex-row items-center space-x-1">
+                    <Icon.Star
+                      height="12"
+                      width="12"
+                      stroke={themeColors.bgColor(1)}
+                      strokeWidth={2.5}
+                    />
+                    <Text className="text-xs">
+                      <Text className="text-green-700">
+                        {" "}
+                        {dish.rating ?? "4.75"}{" "}
+                      </Text>
+                      <Text className="text-gray-700">
+                        &#40; 4.4K reviews&#41; .
+                        <Text className="font-semibold">{dish.category}</Text>
+                      </Text>
+                    </Text>
+                  </View>
                 </View>
               </View>
             </TouchableWithoutFeedback>

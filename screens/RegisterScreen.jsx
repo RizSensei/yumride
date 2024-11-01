@@ -17,7 +17,6 @@ import Toast from "react-native-toast-message";
 const authentication = getAuth();
 
 const Register = () => {
-  const [focused, setFocused] = useState(false);
   const navigation = useNavigation();
 
   const [hidePass, setHidePass] = useState(true);
@@ -27,21 +26,20 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleSignUp = () => {
-    // setIsLoading(true);
     createUserWithEmailAndPassword(authentication, email, password)
       .then((res) => {
-        console.log(res.user.email);
         setEmail("");
         setPassword("");
         setConfirmPassword("");
         Toast.show({
-          type: 'success',
-          text1: 'Registration Successful',
+          type: "success",
+          text1: "Registration Successful",
         });
+        navigation.navigate("Login");
       })
       .catch((error) => {
         console.log(error);
-      })
+      });
   };
 
   return (
@@ -51,12 +49,12 @@ const Register = () => {
           height: "100%",
           padding: 20,
           backgroundColor: "white",
-          display: "flex",
+          flexDirection:"column",
           justifyContent: "center",
           flexGrow: 1,
         }}
       >
-            <View style={{ alignItems: "center" }}>
+        <View style={{ alignItems: "center" }}>
           <Image
             style={{ height: 250 }}
             resizeMode="contain"
@@ -74,20 +72,27 @@ const Register = () => {
           </Text>
         </View>
         <View style={{ marginVertical: 20 }}>
-          <AppTextInput placeholder="Email" value={email} onChangeText={setEmail}/>
+          <AppTextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+          />
           <AppTextInput
             placeholder="Password"
             secureTextEntry={hidePass ? true : false}
-            value={password} onChangeText={setPassword}
+            value={password}
+            onChangeText={setPassword}
           />
           <AppTextInput
             placeholder="Confirm Password"
             secureTextEntry={hidePass ? true : false}
-            value={confirmPassword} onChangeText={setConfirmPassword}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
           />
         </View>
         <TouchableOpacity
-          onPress={() => handleSignUp()}
+          // onPress={() => handleSignUp()}
+          onPress={() => navigation.navigate("OtpValidation")}
           style={{
             padding: 20,
             marginVertical: 10,
@@ -133,10 +138,10 @@ const Register = () => {
             navigation.navigate("Home");
           }}
           style={{
-            marginTop: 10
+            marginTop: 10,
           }}
         >
-        <Text
+          <Text
             style={{
               color: themeColors.text,
               textAlign: "center",
@@ -145,7 +150,7 @@ const Register = () => {
           >
             Back - Home
           </Text>
-          </TouchableOpacity>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );

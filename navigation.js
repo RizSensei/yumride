@@ -17,6 +17,7 @@ import { useCart } from "./hooks/useCart";
 import CartSummaryScreen from "./screens/CartSummaryScreen";
 import StartScreen from "./screens/StartScreen";
 import AllDishesScreen from "./screens/AllDishesScreen";
+import OtpValidationScreen from "./screens/OtpValidationScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,13 +26,7 @@ function TabNavigator() {
   const { cartItemsLength } = useCart();
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name="Start"
-        component={StartScreen}
-        // options={{
-        //   tabBarStyle: { display:'none' }, 
-        // }}
-      />
+      {/* <Tab.Screen name="Start" component={StartScreen} /> */}
       <Tab.Screen
         name="Home"
         component={HomeScreen}
@@ -109,13 +104,18 @@ export default function Navigation() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="MainTabs" component={TabNavigator} />
+
+          {/* authentication screens  */}
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="OtpValidation" component={OtpValidationScreen} />
+
+          {/* inner screens  */}
+          <Stack.Screen name="Start" component={StartScreen} />
           <Stack.Screen name="Restaurant" component={RestaurantScreen} />
           <Stack.Screen name="AllDishes" component={AllDishesScreen} />
           <Stack.Screen name="Delivery" component={DeliveryScreen} />
           <Stack.Screen name="CartSummary" component={CartSummaryScreen} />
-          <Stack.Screen name="Start" component={StartScreen} />
           <Stack.Screen
             name="OrderPreparing"
             options={{ presentation: "fullScreenModal" }}
