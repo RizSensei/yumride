@@ -1,18 +1,18 @@
 /* eslint-disable prettier/prettier */
 import { useNavigation } from "@react-navigation/native";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import React, { useState } from "react";
 import {
   Image,
   SafeAreaView,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
-import AppTextInput from "../components/appTextInput";
-import { themeColors } from "../theme";
-import "../firebaseConfig";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Toast from "react-native-toast-message";
+import AppTextInput from "../components/appTextInput";
+import "../firebaseConfig";
+import { themeColors } from "../theme";
 
 const authentication = getAuth();
 
@@ -49,16 +49,16 @@ const Register = () => {
           height: "100%",
           padding: 20,
           backgroundColor: "white",
-          flexDirection:"column",
+          flexDirection: "column",
           justifyContent: "center",
           flexGrow: 1,
         }}
       >
         <View style={{ alignItems: "center" }}>
           <Image
-            style={{ height: 250 }}
+            style={{ height: 50 }}
             resizeMode="contain"
-            source={require("../assets/images/YumBites.png")}
+            source={require("../assets/images/YumBites-cropped.png")}
           />
           <Text
             style={{
@@ -114,7 +114,6 @@ const Register = () => {
             Sign up
           </Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("Login");

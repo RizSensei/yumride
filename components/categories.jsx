@@ -6,7 +6,7 @@ import { categories } from "../data/categories-data";
 export default function Categories() {
   const [activeCategory, setActiveCategory] = useState(null);
   return (
-    <View className="bg-white py-5">
+    <View className="py-5">
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
@@ -16,22 +16,24 @@ export default function Categories() {
         }}
       >
         {categories.map((category, index) => {
-            let isActive = index === activeCategory;
-            let BtnClass= isActive ? 'bg-[#FB923C]/90' : 'bg-gray-200';
-            let TextClass= isActive ? 'font-semibold text-white' : 'bg-gray-5200';
+            // let isActive = index === activeCategory;
+            // let BtnClass= isActive ? 'bg-[#FB923C]/90' : 'bg-gray-200';
+            // let TextClass= isActive ? 'font-semibold text-white' : 'bg-gray-5200';
             const {name,image} = category;
 
           return (
             <View key={index} className="flex justify-center items-center mr-5">
               <TouchableOpacity 
               onPress={() => setActiveCategory(index)}
-              className={`h-16 w-16 rounded-full flex flex-col items-center justify-center overflow-hidden ${BtnClass}`}>
+              className={`h-16 w-16 rounded-full flex flex-col items-center justify-center overflow-hidden`}>
+              {/* className={`h-16 w-16 rounded-full flex flex-col items-center justify-center overflow-hidden ${BtnClass}`}> */}
                 <Image
                   source={{ uri: image }}
                   className="h-full w-full object-cover"
                 />
               </TouchableOpacity>
-                <Text className={`text-sm ${TextClass}`}>{name}</Text>
+                <Text className={`text-sm`}>{name}</Text>
+                {/* <Text className={`text-sm ${TextClass}`}>{name}</Text> */}
             </View>
           );
         })}

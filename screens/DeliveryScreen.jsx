@@ -55,7 +55,7 @@ export default function DeliveryScreen() {
             </Text>
           </View>
           <Image
-            source={require("../assets/images/Take Away-rafiki.png")}
+            source={require("../assets/images/Take Away.gif")}
             className="w-20 h-20 rounded-full"
           />
         </View>

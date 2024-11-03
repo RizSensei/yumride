@@ -45,6 +45,8 @@ const StarterComp = ({ handlePressExplore }) => {
           justifyContent: "center",
           alignItems: "center",
           paddingVertical: 52,
+        backgroundColor:'white'
+
         }}
       >
         <View style={{ position: "relative" }}>

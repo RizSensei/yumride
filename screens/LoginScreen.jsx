@@ -52,9 +52,9 @@ const Login = () => {
       >
         <View style={{ alignItems: "center" }}>
           <Image
-            style={{ height: 250 }}
+            style={{ height: 50 }}
             resizeMode="contain"
-            source={require("../assets/images/YumBites.png")}
+            source={require("../assets/images/YumBites-cropped.png")}
           />
           <Text
             style={{

@@ -36,7 +36,7 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.AndroidSafeArea}>
+    <SafeAreaView>
       {/* <StatusBar barStyle="dark-content" /> */}
       {RenderComponent()}
     </SafeAreaView>

@@ -10,6 +10,7 @@ const LoaderComp = () => {
         justifyContent: "center",
         alignItems: "center",
         paddingVertical: 52,
+        backgroundColor:'white'
       }}
     >
       <View style={{ flexDirection: "column" }}>

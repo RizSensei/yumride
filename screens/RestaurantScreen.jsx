@@ -1,11 +1,12 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import * as Icon from "react-native-feather";
 import { useDispatch } from "react-redux";
 import CartIcon from "../components/cartIcon";
-import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
+import { useCart } from "../hooks/useCart";
+import { addToCart } from "../redux/slices/cartSlice";
 import { themeColors } from "../theme";
 
 export default function RestaurantScreen() {
@@ -13,14 +14,22 @@ export default function RestaurantScreen() {
   let item = params;
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const { cartItems } = useCart();
 
   const handleAddToCart = () => {
     dispatch(addToCart({ ...item }));
   };
 
-  const handleDecrease = () => {
-    dispatch(removeFromCart({ ...item }));
-  };
+  const [itemExist, setItemExist] = useState(false);
+
+  useEffect(() => {
+    const itemExistInCart = cartItems.some((dish) => dish.name === item.name);
+    if (itemExistInCart) {
+      setItemExist(true);
+    } else {
+      setItemExist(false);
+    }
+  }, [item]);
 
   return (
     <View className="h-full bg-white">
@@ -63,45 +72,64 @@ export default function RestaurantScreen() {
                   ${item.price}
                 </Text>
                 <View className="flex-row items-center">
-                  <TouchableOpacity
-                    onPress={handleAddToCart}
-                    className="p-1 rounded-full"
-                    style={{ backgroundColor: themeColors.bgColor(1) }}
-                  >
-                    <Text
-                      style={{
-                        color: "white",
-                        paddingVertical: 2,
-                        paddingHorizontal: 5,
-                      }}
+                  {itemExist ? (
+                    <TouchableOpacity
+                      className="p-1 rounded-full"
+                      style={{ backgroundColor: themeColors.bgColor(1) }}
                     >
-                      Add to Cart
-                    </Text>
-                  </TouchableOpacity>
+                      <Text
+                        style={{
+                          color: "white",
+                          paddingVertical: 2,
+                          paddingHorizontal: 5,
+                        }}
+                      >
+                        Added
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={handleAddToCart}
+                      className="p-1 rounded-full"
+                      style={{ backgroundColor: themeColors.bgColor(1) }}
+                    >
+                      <Text
+                        style={{
+                          color: "white",
+                          paddingVertical: 2,
+                          paddingHorizontal: 5,
+                        }}
+                      >
+                        Add to Cart
+                      </Text>
+                    </TouchableOpacity>
+                  )}
                 </View>
               </View>
               <Text className="text-gray-500 mt-2"> {item?.description} </Text>
 
-              <View
-                style={{
-                  marginTop: 10,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2,
-                }}
-              >
+              {itemExist && (
                 <View
                   style={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 10,
-                    backgroundColor: themeColors.bgColor(0.5),
+                    marginTop: 10,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 2,
                   }}
                 >
-                  <Text style={{ color: "white" }}>
-                    You have already added the dish in the cart.
-                  </Text>
+                  <View
+                    style={{
+                      paddingVertical: 10,
+                      paddingHorizontal: 10,
+                      backgroundColor: themeColors.bgColor(0.5),
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>
+                      You have already added the dish in the cart.
+                    </Text>
+                  </View>
                 </View>
-              </View>
+              )}
             </View>
           </View>
         </View>

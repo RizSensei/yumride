@@ -21,6 +21,8 @@ import {
 } from "../redux/slices/cartSlice";
 import { themeColors } from "../theme";
 import { showToastForEmptyCart } from "../components/toast";
+import { styles } from "../services/styles";
+import PageHeader from "../components/PageHeader";
 
 const CartScreen = () => {
   const { cartItems, cartTotal } = useCart();
@@ -33,25 +35,14 @@ const CartScreen = () => {
 
   return (
     <SafeAreaView style={styles.AndroidSafeArea}>
-      <View className="relative py-4 shadow-sm">
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          className="absolute top-2 left-4 bg-gray-50 p-2 rounded-full shadow z-[100]"
-        >
-          <Icon.ArrowLeft strokeWidth={3} stroke={themeColors.bgColor(1)} />
-        </TouchableOpacity>
-        <View>
-          <Text className="text-center font-bold text-xl">Your Cart</Text>
-          {/* <Text className="text-center text-gray-500">{restaurant?.name}</Text> */}
-        </View>
-      </View>
+      <PageHeader label="Your Cart" backOption={true} />
 
-      <View
+      {/* <View
         style={{ backgroundColor: themeColors.bgColor(0.2) }}
         className="flex-row px-4 items-center"
       >
         <Image
-          source={require("../assets/images/Take Away-rafiki.png")}
+          source={require("../assets/images/Take Away.gif")}
           className="w-20 h-20 rounded-full"
         />
         <Text className="flex-1 pl-4 font-semibold">
@@ -65,12 +56,12 @@ const CartScreen = () => {
             Change
           </Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 0 }}
-        className="bg-white pt-5"
+        className="bg-white"
       >
         {cartItems.map((item, index) => {
           return (
@@ -96,8 +87,8 @@ const CartScreen = () => {
                 >
                   <Icon.Minus
                     strokeWidth={2}
-                    height={20}
-                    width={20}
+                    height={18}
+                    width={18}
                     stroke={"white"}
                   />
                 </TouchableOpacity>
@@ -109,8 +100,8 @@ const CartScreen = () => {
                 >
                   <Icon.Plus
                     strokeWidth={2}
-                    height={20}
-                    width={20}
+                    height={18}
+                    width={18}
                     stroke={"white"}
                   />
                 </TouchableOpacity>
@@ -120,10 +111,10 @@ const CartScreen = () => {
                 className="p-1 rounded-full"
                 style={{ backgroundColor: "red" }}
               >
-                <Icon.X
+                <Icon.Trash2
                   strokeWidth={2}
-                  height={20}
-                  width={20}
+                  height={18}
+                  width={18}
                   stroke={"white"}
                 />
               </TouchableOpacity>
@@ -153,7 +144,11 @@ const CartScreen = () => {
         </View>
         <View>
           <TouchableOpacity
-            onPress={ cartItems.length === 0 ? showToastForEmptyCart :  () => navigation.navigate("CartSummary") }
+            onPress={
+              cartItems.length === 0
+                ? showToastForEmptyCart
+                : () => navigation.navigate("CartSummary")
+            }
             // onPress={() => navigation.navigate("OrderPreparing")}
             // onPress={() => navigation.navigate("CartSummary")}
             style={{ backgroundColor: themeColors.bgColor(1) }}
@@ -170,11 +165,3 @@ const CartScreen = () => {
 };
 
 export default CartScreen;
-
-const styles = StyleSheet.create({
-  AndroidSafeArea: {
-    flex: 1,
-    backgroundColor: "white",
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-});
